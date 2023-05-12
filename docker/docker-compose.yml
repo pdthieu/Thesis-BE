@@ -1,0 +1,30 @@
+version: '3.1'
+name: nest_next_template
+
+services:
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=12345678
+      - POSTGRES_DB=thesis
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+    ports:
+      - 15432:5432
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  redis:
+    image: redis
+    restart: always
+    # command: redis-server --appendonly yes --requirepass 12345678
+    volumes:
+      - ./redis/data:/data
+    ports:
+      - 26379:6379
