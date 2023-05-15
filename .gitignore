@@ -1,6 +1,12 @@
 # compiled output
-/dist
-/node_modules
+dist
+build
+node_modules
+
+# Docker volumes
+docker/data
+docker/postgres
+docker/redis
 
 # Logs
 logs
@@ -33,3 +39,16 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# yarn please
+package-lock.json
+
+# local env
+.env.local
+.env.*.local
+
+# vscode
+.vscode
+
+# LOCAL
+ormconfig.json
