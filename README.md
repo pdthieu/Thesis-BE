@@ -29,33 +29,44 @@
 ## Installation
 
 ```bash
-$ npm install
+$ yarn
 ```
+
+## Start docker (If database local used)
+
+```bash
+# start
+$ yarn docker:local up -d
+
+# stop
+$ yarn docker:local stop
+```
+
+## Environment
+
+Copy file '.env' to '.env.local' and add value to keys
 
 ## Running the app
 
 ```bash
 # development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
+$ yarn dev
 
 # production mode
-$ npm run start:prod
+$ yarn prod
 ```
 
 ## Test
 
 ```bash
 # unit tests
-$ npm run test
+$ yarn test
 
 # e2e tests
-$ npm run test:e2e
+$ yarn test:e2e
 
 # test coverage
-$ npm run test:cov
+$ yarn test:cov
 ```
 
 ## Support
