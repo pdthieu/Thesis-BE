@@ -1,7 +1,7 @@
 import '@env';
 import '@settings/typeorm-query';
 
-import path from 'path';
+import path, { resolve } from 'path';
 
 import { json, urlencoded } from 'express';
 import { WINSTON_MODULE_NEST_PROVIDER, WinstonModule } from 'nest-winston';
@@ -16,6 +16,7 @@ import systemConfig from '@core/config/system';
 import { loggerOptions } from './core/config/winston';
 import { AppModule } from './app.module';
 import { ExceptionFilter } from './exception.filter';
+import { existsSync, mkdirSync, writeFileSync } from 'fs';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -51,7 +52,7 @@ async function bootstrap() {
   // enable swagger
   if (systemConfig.enableSwagger) {
     const options = new DocumentBuilder()
-      .setTitle('Nest Next Template')
+      .setTitle('Thesis BE')
       .setDescription('Powered by Hieu Phan')
       .setVersion('1.0.0')
       .build();
@@ -61,6 +62,15 @@ async function bootstrap() {
 
     // generate typescript api
     if (!systemConfig.isDebugging) {
+      const docPath = path.resolve(__dirname, '../docs/');
+      if (!existsSync(docPath)) {
+        mkdirSync(docPath, { recursive: true });
+      }
+      writeFileSync(
+        resolve(docPath, 'api-spec.json'),
+        JSON.stringify(document, null, 2),
+      );
+
       await generateApi({
         name: 'sdk',
         output: path.resolve(__dirname, '../src/api'),
@@ -74,6 +84,7 @@ async function bootstrap() {
           tabWidth: 2,
           printWidth: 100,
           parser: 'typescript',
+          unwrapResponseData: true,
         },
         httpClientType: 'axios',
       });

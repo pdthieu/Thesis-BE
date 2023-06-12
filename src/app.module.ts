@@ -8,6 +8,7 @@ import LoggerModule, { RequestLoggerMiddleware } from '@modules/logger';
 import { WinstonLoggerModule } from '@modules/logger/winston-logger.module';
 
 import { dataSourceOptions } from './settings/typeorm';
+import { BalanceModule } from '@modules/balance/balance.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { dataSourceOptions } from './settings/typeorm';
     WinstonLoggerModule,
     HttpModule,
     HealthModule.http(),
+    BalanceModule.http(),
   ],
 })
 export class AppModule implements NestModule {

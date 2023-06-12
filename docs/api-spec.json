@@ -1,0 +1,331 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/thesis/health/server": {
+      "get": {
+        "operationId": "HealthController_serverCheck",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/api/thesis/health": {
+      "get": {
+        "operationId": "HealthController_check",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The Health Check is successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "ok"
+                    },
+                    "info": {
+                      "type": "object",
+                      "example": {
+                        "database": {
+                          "status": "up"
+                        }
+                      },
+                      "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                          "status": {
+                            "type": "string"
+                          }
+                        },
+                        "additionalProperties": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    },
+                    "error": {
+                      "type": "object",
+                      "example": {},
+                      "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                          "status": {
+                            "type": "string"
+                          }
+                        },
+                        "additionalProperties": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    },
+                    "details": {
+                      "type": "object",
+                      "example": {
+                        "database": {
+                          "status": "up"
+                        }
+                      },
+                      "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                          "status": {
+                            "type": "string"
+                          }
+                        },
+                        "additionalProperties": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "The Health Check is not successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "info": {
+                      "type": "object",
+                      "example": {
+                        "database": {
+                          "status": "up"
+                        }
+                      },
+                      "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                          "status": {
+                            "type": "string"
+                          }
+                        },
+                        "additionalProperties": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    },
+                    "error": {
+                      "type": "object",
+                      "example": {
+                        "redis": {
+                          "status": "down",
+                          "message": "Could not connect"
+                        }
+                      },
+                      "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                          "status": {
+                            "type": "string"
+                          }
+                        },
+                        "additionalProperties": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    },
+                    "details": {
+                      "type": "object",
+                      "example": {
+                        "database": {
+                          "status": "up"
+                        },
+                        "redis": {
+                          "status": "down",
+                          "message": "Could not connect"
+                        }
+                      },
+                      "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                          "status": {
+                            "type": "string"
+                          }
+                        },
+                        "additionalProperties": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/api/thesis/balance/addrs": {
+      "get": {
+        "operationId": "BalanceController_getBalanceAddreses",
+        "parameters": [
+          {
+            "name": "addresses",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IBalance"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "balance"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Thesis BE",
+    "description": "Powered by Hieu Phan",
+    "version": "1.0.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "ITxRef": {
+        "type": "object",
+        "properties": {
+          "txHash": {
+            "type": "string"
+          },
+          "blockHeight": {
+            "type": "number"
+          },
+          "txInputN": {
+            "type": "number"
+          },
+          "txOutputN": {
+            "type": "number"
+          },
+          "value": {
+            "type": "number"
+          },
+          "refBalance": {
+            "type": "number"
+          },
+          "spent": {
+            "type": "boolean"
+          },
+          "confirmations": {
+            "type": "number"
+          },
+          "confirmed": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "doubleSpend": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "txHash",
+          "blockHeight",
+          "txInputN",
+          "txOutputN",
+          "value",
+          "refBalance",
+          "spent",
+          "confirmations",
+          "confirmed",
+          "doubleSpend"
+        ]
+      },
+      "IBalance": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string"
+          },
+          "totalReceived": {
+            "type": "number"
+          },
+          "totalSent": {
+            "type": "number"
+          },
+          "balance": {
+            "type": "number"
+          },
+          "unconfirmedBalance": {
+            "type": "number"
+          },
+          "finalBalance": {
+            "type": "number"
+          },
+          "nTx": {
+            "type": "number"
+          },
+          "unconfimedNTx": {
+            "type": "number"
+          },
+          "finalNTx": {
+            "type": "number"
+          },
+          "txrefs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ITxRef"
+            }
+          },
+          "txUrl": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "address",
+          "totalReceived",
+          "totalSent",
+          "balance",
+          "unconfirmedBalance",
+          "finalBalance",
+          "nTx",
+          "unconfimedNTx",
+          "finalNTx",
+          "txrefs",
+          "txUrl"
+        ]
+      }
+    }
+  }
+}

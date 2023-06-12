@@ -48,7 +48,7 @@
       "@env": ["src/env"],
       "@core/*": ["src/core/*"],
       "@models/*": ["src/models/*"],
-      "@entities/*": ["src/entities/*"],
+      "@entities/*": ["src/database/entities/*"],
       "@modules/*": ["src/modules/*"],
       "@utils/*": ["src/utils/*"],
       "@settings/*": ["src/settings/*"],

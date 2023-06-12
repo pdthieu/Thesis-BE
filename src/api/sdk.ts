@@ -9,6 +9,34 @@
  * ---------------------------------------------------------------
  */
 
+export interface ITxRef {
+  txHash: string;
+  blockHeight: number;
+  txInputN: number;
+  txOutputN: number;
+  value: number;
+  refBalance: number;
+  spent: boolean;
+  confirmations: number;
+  /** @format date-time */
+  confirmed: string;
+  doubleSpend: boolean;
+}
+
+export interface IBalance {
+  address: string;
+  totalReceived: number;
+  totalSent: number;
+  balance: number;
+  unconfirmedBalance: number;
+  finalBalance: number;
+  nTx: number;
+  unconfimedNTx: number;
+  finalNTx: number;
+  txrefs: ITxRef[];
+  txUrl: string;
+}
+
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, ResponseType } from 'axios';
 
 export type QueryParamsType = Record<string | number, any>;
@@ -142,7 +170,7 @@ export class HttpClient<SecurityDataType = unknown> {
 }
 
 /**
- * @title Nest Next Template
+ * @title Thesis BE
  * @version 1.0.0
  * @contact
  *
@@ -232,6 +260,27 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       >({
         path: `/api/thesis/health`,
         method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags balance
+     * @name BalanceControllerGetBalanceAddreses
+     * @request GET:/api/thesis/balance/addrs
+     */
+    balanceControllerGetBalanceAddreses: (
+      query: {
+        addresses: string[];
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<IBalance[], any>({
+        path: `/api/thesis/balance/addrs`,
+        method: 'GET',
+        query: query,
         format: 'json',
         ...params,
       }),
