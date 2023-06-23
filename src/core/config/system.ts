@@ -12,6 +12,10 @@ export enum ConfigKey {
 
 @Injectable()
 export class SystemConfigProvider {
+  public get isTestnetNetwork() {
+    return this.getEnv('BITCOIN_NETWORK', 'testnet') === 'testnet';
+  }
+
   public get isProduction() {
     return this.getEnv('NODE_ENV', 'development') === 'production';
   }

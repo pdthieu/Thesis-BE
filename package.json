@@ -23,7 +23,8 @@
     "migrate:generate": "ts-node -r tsconfig-paths/register -P ./tsconfig.json ./node_modules/typeorm/cli.js migration:generate ./src/migrations/migration -d ./src/settings/typeorm.ts",
     "migrate:up": "ts-node -r tsconfig-paths/register -P ./tsconfig.json ./node_modules/typeorm/cli.js migration:run",
     "migrate:down": "ts-node -r tsconfig-paths/register -P ./tsconfig.json ./node_modules/typeorm/cli.js migration:revert",
-    "docker:local": "docker-compose -f docker/docker-compose.yml"
+    "docker:local": "docker-compose -f docker/docker-compose.yml",
+    "script:test-coinselect": "ts-node -r tsconfig-paths/register src/scripts/test-coinselect.ts"
   },
   "dependencies": {
     "@nestjs/axios": "^2.0.0",
